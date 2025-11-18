@@ -86,4 +86,5 @@ async function createProject(data:any){
 }
 function goTo(id:number){ router.push(`/projects/${id}`) }
 function tasksCount(projectId:number){ return tasks.items.filter(t=>t.projectId===projectId).length }
+
 </script>

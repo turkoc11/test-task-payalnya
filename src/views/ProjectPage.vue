@@ -31,7 +31,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useProjectsStore } from '@/stores/projects'
 import { useTasksStore } from '@/stores/tasks'
-import draggable from 'vue-draggable-next'
+import { VueDraggableNext } from 'vue-draggable-next'
 import TaskModal from '@/components/TaskModal.vue'
 import { toast } from 'vue-sonner'
 
