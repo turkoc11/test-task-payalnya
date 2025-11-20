@@ -4,13 +4,13 @@
     <h2>{{project?.name}}</h2>
 
     <div style="margin:12px 0">
-      <button class="btn" @click="showTaskModal=true">Add Task</button>
+      <button class="btn" @click="openAddTask">Add Task</button>
     </div>
 
     <div class="columns">
       <div class="col" v-for="col in columns" :key="col.key">
         <h4>{{col.title}}</h4>
-        <draggable v-model="colTasks[col.key]" :group="{ name: 'tasks', pull: true, put: true }" @end="onDragEnd">
+        <VueDraggableNext v-model="colTasks[col.key]" :group="{ name: 'tasks', pull: true, put: true }" @end="onDragEnd">
           <template #item="{element}">
             <div class="task-card">
               <strong>{{element.title}}</strong>
@@ -18,7 +18,7 @@
               <div>{{element.dueDate}}</div>
             </div>
           </template>
-        </draggable>
+        </VueDraggableNext>
       </div>
     </div>
 
@@ -31,7 +31,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useProjectsStore } from '@/stores/projects'
 import { useTasksStore } from '@/stores/tasks'
-import { VueDraggableNext } from 'vue-draggable-next'
+import { VueDraggableNext } from "vue-draggable-next";
 import TaskModal from '@/components/TaskModal.vue'
 import { toast } from 'vue-sonner'
 
@@ -73,5 +73,10 @@ async function createTask(payload:any){
   columns.forEach(c=> colTasks.value[c.key] = tasks.items.filter(t=>t.status===c.key).slice().sort((a,b)=>a.order-b.order))
   showTaskModal.value = false
   toast.success('Task added')
+}
+
+// ---- missing openAddTask -> add here ----
+function openAddTask(){
+  showTaskModal.value = true
 }
 </script>

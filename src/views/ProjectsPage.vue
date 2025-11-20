@@ -87,4 +87,12 @@ async function createProject(data:any){
 function goTo(id:number){ router.push(`/projects/${id}`) }
 function tasksCount(projectId:number){ return tasks.items.filter(t=>t.projectId===projectId).length }
 
+// ---- MISSING openAdd -> added here ----
+function openAdd() {
+  // prepare modal default
+  const defaults = { name: '', description: '', status: 'active' }
+  showModal.value = true
+  // pass defaults via event when modal emits save
+  // we rely on ProjectModal to emit save with payload
+}
 </script>

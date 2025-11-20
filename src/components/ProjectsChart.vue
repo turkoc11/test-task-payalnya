@@ -5,36 +5,51 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
-import { Chart, ArcElement, Tooltip, Legend } from 'chart.js'
-Chart.register(ArcElement, Tooltip, Legend)
-import { defineProps } from 'vue'
+import { onMounted, ref, watch } from "vue";
+import {
+  Chart,
+  ArcElement,
+  Tooltip,
+  Legend
+} from "chart.js";
 
-const props = defineProps({ projects: Array, tasks: Array })
-const canvas = ref<HTMLCanvasElement | null>(null)
+Chart.register(ArcElement, Tooltip, Legend);
 
-function computeCounts(){
-  const counts = { todo:0, in_progress:0, done:0 }
-  props.tasks.forEach((t:any)=>{ if(t.status==='todo') counts.todo++; else if(t.status==='in_progress') counts.in_progress++; else if(t.status==='done') counts.done++ })
-  return counts
-}
+const props = defineProps<{
+  projects: any[],
+  tasks: any[]
+}>();
 
-let chart: any = null
-onMounted(()=>{
-  const counts = computeCounts()
-  if(!canvas.value) return
-  const ctx = canvas.value.getContext('2d')
-  if(!ctx) return
-  chart = new Chart(ctx, {
-    type: 'doughnut',
-    data: { labels: ['To Do','In Progress','Done'], datasets: [{ data: [counts.todo, counts.in_progress, counts.done] }] }
-  })
-})
+const chartRef = ref<HTMLCanvasElement | null>(null);
+let chart: Chart | null = null;
 
-watch(()=>props.tasks, (n)=>{
-  if(!chart) return
-  const counts = computeCounts()
-  chart.data.datasets[0].data = [counts.todo, counts.in_progress, counts.done]
-  chart.update()
-})
+const renderChart = () => {
+  if (!chartRef.value) return;
+
+  if (chart) {
+    chart.destroy();
+  }
+
+  const statuses = ["To Do", "In Progress", "Done"];
+
+  const counts = statuses.map(status =>
+    props.tasks.filter(t => t.status === status).length
+  );
+
+  chart = new Chart(chartRef.value, {
+    type: "doughnut",
+    data: {
+      labels: statuses,
+      datasets: [
+        {
+          data: counts
+        }
+      ]
+    }
+  });
+};
+
+onMounted(renderChart);
+
+watch(() => props.tasks, renderChart, { deep: true });
 </script>

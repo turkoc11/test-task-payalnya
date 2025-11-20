@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 const emit = defineEmits(['close','save'])
-const props = defineProps({ projectId: { type: Number, required: true } })
+const props = defineProps({ projectId: { type: Number, required: false } })
 const form = reactive({ title:'', assignee:'', status:'todo', dueDate: '' })
 function onSubmit(){ if(!form.title.trim()) return alert('Title required'); emit('save', { ...form }) }
 </script>

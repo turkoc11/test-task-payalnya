@@ -11,7 +11,7 @@ npm run json:serve
 http://localhost:3000/projects
 http://localhost:3000/tasksCRUD
 
-Запуск фронта (открывать в новом терминале):
+Запуск фронта:
 npm run dev
 
 API был сделан на простом json-server. 
