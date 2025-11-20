@@ -16,7 +16,7 @@
         <tr>
           <th @click="sort('id')">ID</th>
           <th @click="sort('name')">Name</th>
-          <th @click="sort('tasksCount')">#Tasks</th>
+          <th @click="sort('tasksCount')">Tasks</th>
           <th @click="sort('status')">Status</th>
           <th @click="sort('createdAt')">Created</th>
         </tr>
